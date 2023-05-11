@@ -23,6 +23,8 @@ async def caps(update, context):
     text_caps = ' '.join(context.args).upper()
     await context.bot.send_message(chat_id=update.effective_chat.id, text=text_caps)
 
+async def send_piture(update, context):
+    await context.bot.send_photo(chat_id=update.effective_chat.id, photo='https://www.gastronom.ru/binfiles/images/20170208/m2faa08a.jpg')
 
 if __name__ == '__main__':
     TOKEN = os.environ["TOKEN"]
@@ -34,9 +36,12 @@ if __name__ == '__main__':
     start_handler = CommandHandler('start', start)
     echo_handler = MessageHandler(filters.TEXT & (~filters.COMMAND), echo)
     caps_handler = CommandHandler('caps', caps)
+    img_handler = CommandHandler('img', send_piture)
     # регистрируем обработчик в приложение
     application.add_handler(start_handler)
     application.add_handler(echo_handler)
     application.add_handler(caps_handler)
+    application.add_handler(img_handler)
     # запускаем приложение
+
     application.run_polling()
