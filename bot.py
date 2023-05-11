@@ -1,6 +1,7 @@
 import logging
 from telegram.ext import filters, MessageHandler, ApplicationBuilder, CommandHandler
 import os
+from data_base_and_user import data_base
 
 # настроим модуль ведения журнала логов
 logging.basicConfig(
@@ -27,6 +28,7 @@ if __name__ == '__main__':
     TOKEN = os.environ["TOKEN"]
     # создание экземпляра бота через `ApplicationBuilder`
     application = ApplicationBuilder().token(TOKEN).build()
+
 
     # создаем обработчик
     start_handler = CommandHandler('start', start)
