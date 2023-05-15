@@ -1,9 +1,11 @@
 import logging
 
-from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import filters, MessageHandler, ApplicationBuilder, CommandHandler, CallbackQueryHandler
 import os
-from data_base_and_user import data_base
+from recipe_search_bot.recipe_search_bot.data_base_and_user import data_base
+
+from recipe_search_bot.recipe_search_bot.parser import ParserForRequest
+from recipe_search_bot.recipe_search_bot.parser import generate_url
 
 # настроим модуль ведения журнала логов
 logging.basicConfig(
@@ -30,23 +32,18 @@ async def send_piture(update, context):
 
 
 async def get_recipes(update, context):
-    #update.message.reply_text("Beginning of inline keyboard")
-    keyboard = [
-        [
-            InlineKeyboardButton("Button 1", callback_data='1'),
-            InlineKeyboardButton("Button 2", callback_data='2'),
-        ]
-    ]
+    url = generate_url(types=['салат', 'суп', 'второе блюдо'],
+                       kitchen=['домашняя', 'европейская'],
+                       time=['20-40 минут', '40-60 минут', '60-90 минут', '90-120 минут'])
 
-    reply_markup = InlineKeyboardMarkup(keyboard)
-    #update.message.reply_text("Replying to text", reply_markup=reply_markup)
+    parser = ParserForRequest(url)
+    print(parser)
 
-    await context.bot.send_message(chat_id=update.effective_chat.id, text="aga", reply_markup=reply_markup)
 
 
 async def button(update, context):
     query = update.callback_query
-    query.answer()
+    await query.answer()
 
     # This will define which button the user tapped on (from what you assigned to "callback_data". As I assigned them "1" and "2"):
     choice = query.data
@@ -57,6 +54,7 @@ async def button(update, context):
 
     if choice == '2':
         print('b')
+
 
 if __name__ == '__main__':
     TOKEN = os.environ["TOKEN"]
@@ -81,4 +79,3 @@ if __name__ == '__main__':
     # запускаем приложение
 
     application.run_polling()
-    #123

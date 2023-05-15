@@ -24,7 +24,7 @@ def combine_filters_by_ingr(ingr):
     return numbers
 
 
-path_to_filters = 'filters'  # 'parser\\filters'
+path_to_filters = 'parser\\filters'  # 'filters'
 
 
 def generate_url(name=None, types=None, kitchen=None, iningr=None, exingr=None, time=None, veget=None):
