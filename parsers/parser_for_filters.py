@@ -15,7 +15,7 @@ type_of_kitchen = {}
 amount_of_time = {}
 
 response = requests.get(url)
-soup = BeautifulSoup(response.text, 'html.parser')
+soup = BeautifulSoup(response.text, 'html.parsers')
 
 for option in soup.find_all('option'):
     numbers = re.findall(r'\d{1,3}', option.__str__())

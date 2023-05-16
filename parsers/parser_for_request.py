@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import re
-from pages.page import Page
+from .pages.page import Page
 
 requests_re_img = r'/binfiles/images.*jpg|/binfiles/images.*png'
 requests_re_title = r'class="material-anons__des">(.*)</p>'
@@ -23,3 +23,4 @@ class ParserForRequest:
             description = annotation[1]
             page = Page(title, description, to_correct_url + img, to_correct_url + href)
             self.pages.append(page)
+
