@@ -9,24 +9,27 @@ class DataBase:
         with open(path) as f:
             json_content = json.load(f)
         for id, data in json_content.items():
-            user = User(from_dict=data, message_id='-1')
+            user = User(from_dict=data)
             self.users[id] = user
 
-    def create(self, id, message_id):
+    def create(self, id, message_id, message_text, recipe_number=None):
         if id not in self.users:
-            self.users[id] = User(message_id)
+            self.users[id] = User(message_id, message_text)
         else:
-            self.update_message_id(id, message_id)
+            self.update_message_id(id, message_id, message_text, recipe_number)
 
 
-    def update_message_id(self, id, message_id):
-        self.users[id].update_message_id(message_id)
+    def update_message_id(self, id, message_id, message_text, recipe_number=None):
+        id = str(id)
+        self.users[id].update_message_id(message_id, message_text, recipe_number)
 
 
     def get_user(self, id):
+        id = str(id)
         return self.users[id]
 
     def get_recipes(self, id):
+        id = str(id)
         return self.users[id].recipes
 
     def save(self):

@@ -29,36 +29,27 @@ path_to_filters = 'parsers\\filters'  # 'filters'
 
 def generate_url(name=None, types=None, kitchen=None, iningr=None, exingr=None, time=None, veget=None):
     url = 'https://www.gastronom.ru/search/type/recipe?tmp=1'
-    if name is not None:
+    if name is not None and len(name) != 0:
         url += f'&title={name}'
 
-    if iningr is not None:
+    if iningr is not None and len(iningr) != 0:
         url += f'&iningr={",".join(combine_filters_by_ingr(iningr))}'
 
-    if exingr is not None:
+    if exingr is not None and len(exingr) != 0:
         url += f'&exingr={",".join(combine_filters_by_ingr(exingr))}'
 
-    if kitchen is not None:
+    if kitchen is not None and len(kitchen) != 0:
         path = '\\type_of_kitchen.json'
         url += f'&kitchen={",".join(combine_filters(kitchen, path))}'
 
-    if types is not None:
+    if types is not None and len(types) != 0:
         path = '\\type_of_dish.json'
         url += f'&type={",".join(combine_filters(types, path))}'
 
-    if time is not None:
+    if time is not None and len(time) != 0:
         path = '\\amount_of_time.json'
         url += f'&time={",".join(combine_filters(time, path))}'
 
     if veget:
         url += f'&veget=17,16,15,19,18'
     return url
-
-
-#if __name__ == '__main__':
-#    print(generate_url(types=['салат', 'суп', 'второе блюдо'],
-#                       kitchen=['домашняя', 'европейская'],
-#                       iningr=['курица', 'сыр'],
-#                       exingr=['лук'],
-#                       time=['20-40 минут', '40-60 минут', '60-90 минут', '90-120 минут']))
-#    print(generate_url(veget=True))
